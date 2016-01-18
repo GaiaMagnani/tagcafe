@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:ContactMessage:contactMail{% endblock %}
+
+{% block body %}
+<h1>Contact</h1>
+
+{% for flash_message in app.session.flashbag.get('notice') %}
+  <div class="flash-notice">
+    {{ flash_message }}
+  </div>
+{% endfor %}
+
+{{ form_start(form_di_contatto) }}
+<div class="contenitore-subject">
+  {{ form_widget(form_di_contatto.subject)}}
+</div>
+
+{{ form_widget(form_di_contatto)}}
+
+{{ form_end(form_di_contatto)}}
+
+
+{% endblock %}

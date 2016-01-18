@@ -1,0 +1,59 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block content %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="navbar navbar-default navbar-fixed-top">
+      <!--  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+        <ul class="nav navbar-nav">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/bundles/img/logo.png" class="brand">
+          </a>
+          <a href="login" class="logout" style="color: white;"> Log Out </a>
+
+              <li><a href="menu" style="color: white;">Menu</a></li>
+              <li><a href="#"style="background-color:lightgrey; color: white;">Utenti</a></li>
+              <li class="userID"> <a style="color: white;">{{app.user}}</a></li>
+
+        </ul>
+      </nav>
+    </div>
+
+    <div class="row">
+
+      <table class="table">
+        <tr>
+          <th>Utente</th>
+          <th>email</th>
+          <th>crediti</th>
+        </tr>
+        {% for contacts in table %}
+
+          <tr>
+            <td>{{ contacts.getUsername() }}</td>
+            <td>{{ contacts.getEmail() }}</td>
+            <td>
+            <a href="#" id="credits" class="credits" data-type="text" data-pk="{{ contacts.getId() }}" data-url="/tabUsers" data-title="Enter_credits">
+              {{ contacts.getCredits() }}
+            </a>
+            </button></td>
+          </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+
+
+  </div>
+
+  {% endblock %}
+  {% block javascripts %}
+  {{ parent() }}
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="/bundles/js/edit.js"></script>
+
+{% endblock %}

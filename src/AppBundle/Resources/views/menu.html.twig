@@ -1,0 +1,84 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block content %}
+
+  <div class="container-fluid" >
+    <div class="row">
+      <nav class="navbar navbar-default navbar-fixed-top">
+      <!--  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+        <ul class="nav navbar-nav">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/bundles/img/logo.png" class="brand">
+          </a>
+          <a href="login" class="logout" style="color: white;"> Log Out </a>
+
+              <li><a href="#" style="background-color:lightgrey; color: white;">Menu</a></li>
+              <li><a href="tabUsers" style="color: white;">Utenti</a></li>
+              <li class="userID"> <a style="color: white;"> {{app.user}}</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+
+            <h3> Menu del giorno </h3>
+            <h4 id="data"></h4>
+        <form class="menuWriting" name="formtest"  method="post">Primi: <br>
+          {{ form_start(formMenu) }}
+          {{ form_widget(formMenu.primiOne) }} <br>
+          {{ form_widget(formMenu.primiTwo) }} <br>
+          {{ form_widget(formMenu.primiThree) }} <br><br>
+          Secondi: <br>
+          {{ form_widget(formMenu.secondOne) }} <br>
+          {{ form_widget(formMenu.secondTwo) }} <br>
+          {{ form_widget(formMenu.secondThree) }} <br><br>
+          Contorno: <br>
+          {{ form_widget(formMenu.sideOne) }} <br>
+          {{ form_widget(formMenu.sideTwo) }} <br>
+          {{ form_widget(formMenu.sideThree) }} <br>
+          {{ form_widget(formMenu.invio) }} <br>
+          {{ form_end(formMenu) }}
+
+
+        </form>
+      </div>
+
+    <div class="col-md-6">
+      <div id="table-wrapper">
+        <div id="table-scroll">
+          <table class="ordersTable table table-hover" >
+            <thead>
+            <tr>
+              <th>Utente</th>
+              <th>Primo</th>
+              <th>Secondo</th>
+              <th>Contorno</th>
+              <th>Acqua</th>
+              <th>Birra</th>
+              <th>Bevande</th>
+              <th>Caffe</th>
+
+            </tr>
+          </thead>
+
+          {% for fields in orders %}
+          <tbody class="ordersContentTable">
+              <tr>
+                <td>{{ fields.getUser() }}</td>
+                <td>{{ fields.getPrimo() }}</td>
+                <td>{{ fields.getSecondo() }}</td>
+                <td>{{ fields.getContorno() }}</td>
+                <td>{{ fields.getAcqua() }}</td>
+                <td>{{ fields.getBirra() }}</td>
+                <td>{{ fields.getBibita() }}</td>
+                <td>{{ fields.getCaffe() }}</td>
+
+              </tr>
+          </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
