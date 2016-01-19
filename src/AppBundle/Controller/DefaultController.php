@@ -134,7 +134,7 @@ class DefaultController extends Controller
              $error= '';
 
              if ($formUsers->isSubmitted()) {
-               $qrCode = new QrCode();
+          /*     $qrCode = new QrCode();
                 $qrCode
                   ->setText("Life is too short to be generating QR codes")
                   ->setSize(300)
@@ -144,36 +144,36 @@ class DefaultController extends Controller
                   ->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
                   ->setLabel('My label')
                   ->setLabelFontSize(16)
-                  ->render();
+                  ->render();*/
                 $em = $this->getDoctrine()->getManager();
                  // ... perform some action, such as saving the task to the database
                  $today = date_create_from_format('Y-m-d H:i', date('Y-m-d H:i'));
                  $user= $this->get('security.token_storage')->getToken()->getUser();
                  $order->setDate($today);
                  $order->setUser($user->getUsername());
-                 $order->setTotale($order->getPrimo()*5 + $order->getSecondo()*6.5 + $order->getContorno()*3 + $order->getCaffe()*1 + $order->getAcqua()*1 + $order->getBibita()*2 + $order->getBirra()*2);
+                 $order->setTotale($order->getPrimo()*5 + $order->getSecondo()*7 + $order->getContorno()*3 + $order->getCaffe()*1 + $order->getAcqua()*1 + $order->getBibita()*2 + $order->getBirra()*2);
                  $totale= $order->getTotale();
                  $em->persist($order);
                  $em->flush();
 
                  $message = new \Swift_Message();
-                 $dateString = strlen(date('Y-m-d H:i'));
                  // Create your file contents in the normal way, but don't write them to disk
-                 $data = $qrCode;
+          //       $data = $qrCode;
 
                  // Create the attachment with your data
-                 $attachment = \Swift_Attachment::newInstance($data, 'my-qrcode.pdf', 'application/pdf');
+    //             $attachment = \Swift_Attachment::newInstance($data, 'my-qrcode.pdf', 'application/pdf');
                  $message->setTo($user->getEmail());
                  $message->setFrom('info@tagacafe.it',  'TAG Cafe Order App');
                  $message->setSubject('New order');
-                 $message->attach($attachment);
+      //           $message->attach($attachment);
                  $message->setBody('<html>
                  <head>
                  </head>
                  <body>
-                 <img src=' . $message->embed(\Swift_Image::fromPath('https://pbs.twimg.com/profile_images/552770636926300165/beWyvmDV_400x400.png')) .
+                 <img src=' . //$message->embed(\Swift_Image::fromPath('')) .
                    '/>
-                   <h2>Ecco il tuo ordine del ' . $dateString . '</h2>
+                   <h2>Ciao Tagger,</h2>
+                   <h3>questa è la tua prenotazione:</h3>
                  <h5>Primi: ' . $order->getPrimo() . '</h5>
                  <h5>Secondi: ' . $order->getSecondo() . '</h5>
                  <h5>Contorno: ' . $order->getContorno() . '</h5>
@@ -182,12 +182,13 @@ class DefaultController extends Controller
                  <h5>Bibita: ' . $order->getBibita() . '</h5>
                  <h5>Birra: ' . $order->getBirra() . '</h5>
                  <p>
-                 Per un totale di :' . $order->getTotale() . '
-                 </p>' .
-              $attachment = Swift_Attachment::newInstance()
+                 Per un totale di: ' . $order->getTotale() . '
+                 €</p>' .
+          /*    $attachment = Swift_Attachment::newInstance()
               ->setFilename('my-qrcode.pdf')
               ->setContentType('application/pdf')
-              ->setBody($data) . '
+              ->setBody($data) . '*/
+                 ' <h2>Buon appetito!</h2>
                  </body>
                  </html>', 'text/html');
 
@@ -201,8 +202,8 @@ class DefaultController extends Controller
                   $usersInterested->setCredits($usersInterested->getCredits() - (int)$totale); // sottrazione crediti utilizzati
                   $em->persist($usersInterested);
                   $em->flush();
-                  return $this->redirectToRoute('users');
                   $this->addFlash('notice', 'Ordine inviato correttamente');
+                  return $this->redirectToRoute('users');
                   } else {
                   $error = "Non hai abbastanza crediti per quest'ordine";
                   }
@@ -265,8 +266,6 @@ class DefaultController extends Controller
         ->add ('sideOne', TextType::class)
         ->add ('sideTwo', TextType::class)
         ->add ('sideThree', TextType::class)
-
-
         ->add('invio', SubmitType::class, array('label' => 'send', 'attr' => array('class' => 'sendMenu'), ))
         ->getForm();
         $em = $this->getDoctrine()->getManager();

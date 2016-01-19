@@ -2,25 +2,37 @@
 
 
 {% block content %}
+<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 <body class="usersBody">
 
 <div class="container-fluid">
       <div class="row">
 
         <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed visible-xs-*" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
           <a class="navbar-brand" href="#">
             <img alt="Brand" src="/bundles/img/logo.png" class="brand">
           </a>
-          <a href="login" class="logout" style="color: white;"> Log Out </a>
+        </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
 
                 <li><a href="#menuView" class="mainMenu" style="color: white;">Menu</a></li>
                 <li><a href="#bookView" class="mainMenu" style="color: white;" >Prenota</a></li>
                 <li class="userCredits"><a style="color: white;"> {{app.user.credits}}cr</a></li>
                 <li class="userID"> <a style="color: white;"> {{app.user}}</a></li>
+                <li><a href="login" class="logout" style="color: white;"> Log Out </a></li>
+
           </ul>
-        </nav>
       </div>
+    </nav>
+  </div>
 
       <div class="row">
         <div class="col-xs-12 col-md-6 menu">
@@ -36,7 +48,10 @@
             {% endfor %}
           <div>
             <ul class="menuList">
-              {% if menu %}
+            <p class="errorFlash">  {% if error %}
+              {{ error }}
+              {% endif %}
+              {% if menu %} <p>
                 <li class="menuTitle">Primi:</li>
                 <li>{{ primiOne }}</li>
                 <li>{{ primiTwo }}</li>
@@ -64,9 +79,9 @@
       </div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <img src="/bundles/img/bar.jpg" class="col-xs-12 col-md-6 bar" alt="Responsive image">
+        <img src="/bundles/img/sandw.jpeg" class="col-xs-12 col-md-6 bar" alt="Responsive image">
       </div>
-      <div class="col-xs-12 col-md-6 prenotazione">
+      <div class="col-xs-12 col-md-6 reservation">
         <form class="bookYourLunch" method="post" id="bookView">
           <h3>Scegli il tuo pranzo in anticipo:</h3>
 
@@ -74,7 +89,7 @@
 
           <label>Primo: (5€) </label>
           {{ form_widget(formUsers.primo) }} <br>
-          <label>Secondo: (6,50€) </label>
+          <label>Secondo: (7€) </label>
           {{ form_widget(formUsers.secondo) }}<br>
           <label>Contorno: (3€) </label>
           {{ form_widget(formUsers.contorno) }}<br>
@@ -100,4 +115,4 @@
     </div>
   </div>
 </body>
-      {% endblock %}
+{% endblock %}
