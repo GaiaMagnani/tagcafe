@@ -17,17 +17,14 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use SwiftMailer\lib\classes\Swift;
 use Endroid\QrCode\QrCode;
 
-
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Menu;
 use UserBundle\Entity\Utenti;
-
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
 
 
 class DefaultController extends Controller
@@ -64,7 +61,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('secondo', ChoiceType::class, array(
@@ -74,7 +70,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('contorno', ChoiceType::class, array(
@@ -84,7 +79,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('caffe', ChoiceType::class, array(
@@ -94,7 +88,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('acqua', ChoiceType::class, array(
@@ -104,7 +97,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('bibita', ChoiceType::class, array(
@@ -114,7 +106,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('birra', ChoiceType::class, array(
@@ -124,7 +115,6 @@ class DefaultController extends Controller
                  '2' => '2',
                  '3' => '3',
                  ),
-                 // *this line is important*
                'choices_as_values' => true,
              ))
              ->add('save', SubmitType::class, array('label' => 'Invio', 'attr' => array('class' => 'sendMenu'), ))
@@ -146,7 +136,6 @@ class DefaultController extends Controller
                   ->setLabelFontSize(16)
                   ->render();*/
                 $em = $this->getDoctrine()->getManager();
-                 // ... perform some action, such as saving the task to the database
                  $today = date_create_from_format('Y-m-d H:i', date('Y-m-d H:i'));
                  $user= $this->get('security.token_storage')->getToken()->getUser();
                  $order->setDate($today);
@@ -157,10 +146,7 @@ class DefaultController extends Controller
                  $em->flush();
 
                  $message = new \Swift_Message();
-                 // Create your file contents in the normal way, but don't write them to disk
           //       $data = $qrCode;
-
-                 // Create the attachment with your data
     //             $attachment = \Swift_Attachment::newInstance($data, 'my-qrcode.pdf', 'application/pdf');
                  $message->setTo($user->getEmail());
                  $message->setFrom('info@tagacafe.it',  'TAG Cafe Order App');
@@ -209,16 +195,15 @@ class DefaultController extends Controller
                   }
              }
 
-
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Menu');
 
           $menu = $repository->findOneBy(['date' => new \DateTime('now')]);
-          //var_dump($menu);
             if(!$menu) {
               return $this->render('AppBundle::users.html.twig', array(
               'formUsers' => $formUsers->createView(),
               'menu' => $menu,
+              'error' => $error,
             ));
             } else {
                 $primiOne = $menu->getPrimiOne();
@@ -231,24 +216,22 @@ class DefaultController extends Controller
                 $sideTwo = $menu->getSideTwo();
                 $sideThree = $menu->getSideThree();
 
-                //var_dump($primiOne);die;
-
-        return $this->render('AppBundle::users.html.twig', array(
-        'formUsers' => $formUsers->createView(),
-        'menu' => $menu,
-       'primiOne' => $primiOne,
-        'primiTwo' => $primiTwo,
-        'primiThree' => $primiThree,
-        'secondOne' => $secondOne,
-        'secondTwo' => $secondTwo,
-        'secondThree' => $secondThree,
-        'sideOne' => $sideOne,
-        'sideTwo' => $sideTwo,
-        'sideThree' => $sideThree,
-        'error' => $error,
-    ));
-  }
-}
+                return $this->render('AppBundle::users.html.twig', array(
+                  'formUsers' => $formUsers->createView(),
+                  'menu' => $menu,
+                  'primiOne' => $primiOne,
+                  'primiTwo' => $primiTwo,
+                  'primiThree' => $primiThree,
+                  'secondOne' => $secondOne,
+                  'secondTwo' => $secondTwo,
+                  'secondThree' => $secondThree,
+                  'sideOne' => $sideOne,
+                  'sideTwo' => $sideTwo,
+                  'sideThree' => $sideThree,
+                  'error' => $error,
+                ));
+              }
+            }
 
     /**
      * @Route("/menu", name="menu")
@@ -286,33 +269,12 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $orders = $repository->findBy(['date' => new \DateTime('now')]);
 
-
-
-        // $primo = $orders->getPrimo();
-        // $secondo = $orders->getSecondo();
-        // $contorno = $orders->getContorno();
-        // $acqua = $orders->getAcqua();
-        // $bibita = $orders->getBibita();
-        // $birra = $orders->getBirra();
-        // $caffe = $orders->getCaffe();
-
-
-
-        return $this->render('AppBundle::menu.html.twig', array(
-        'formMenu' => $formMenu->createView(),
-      //   'formImage' => $formImage->createView(),
-        'menu' => $menu,
-          'orders' => $orders,
-        //  'primo' => $primo,
-        //  'secondo' => $secondo,
-        //  'contorno' => $contorno,
-        //  'acqua' => $acqua,
-        //  'bibita' => $bibita,
-        //  'birra' => $birra,
-        //  'caffe' => $caffe,
-
-    ));
-    }
+            return $this->render('AppBundle::menu.html.twig', array(
+              'formMenu' => $formMenu->createView(),
+              'menu' => $menu,
+              'orders' => $orders,
+            ));
+          }
 
     /**
      * @Route("/tabUsers", name="tabUsersGet")
@@ -330,7 +292,7 @@ class DefaultController extends Controller
               ->getQuery()
               ->getResult();
 
-        return $this->render('AppBundle::tabUsers.html.twig', array(
+          return $this->render('AppBundle::tabUsers.html.twig', array(
           'table'   => $table,
         ));
     }
@@ -361,8 +323,5 @@ class DefaultController extends Controller
 
              return (new Response())->setContent(json_encode($request->get('value')));
          }
-
-
       }
-
 }

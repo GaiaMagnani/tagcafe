@@ -3,50 +3,38 @@
 {% block content %}
 
   <div class="container-fluid">
-    <div class="row">
-      <nav class="navbar navbar-default navbar-fixed-top">
-      <!--  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
-        <ul class="nav navbar-nav">
-          <a class="navbar-brand" href="#">
-            <img alt="Brand" src="/bundles/img/logo.png" class="brand">
-          </a>
-          <a href="login" class="logoutAdmin" style="color: white;"> Log Out </a>
-
-              <li><a href="menu" style="color: white;">Menu</a></li>
-              <li><a href="#"style="background-color:lightgrey; color: white;">Utenti</a></li>
-              <li class="adminID"> <a style="color: white;">{{app.user}}</a></li>
-
-        </ul>
-      </nav>
-    </div>
-
-    <div class="row">
-
-      <table class="table">
-        <tr>
-          <th>Utente</th>
-          <th>email</th>
-          <th>crediti</th>
-        </tr>
-        {% for contacts in table %}
-
-          <tr>
-            <td>{{ contacts.getUsername() }}</td>
-            <td>{{ contacts.getEmail() }}</td>
-            <td>
-            <a href="#" id="credits" class="credits" data-type="text" data-pk="{{ contacts.getId() }}" data-url="/tabUsers" data-title="Enter_credits">
-              {{ contacts.getCredits() }}
-            </a>
-            </button></td>
-          </tr>
-        {% endfor %}
-      </table>
-
-    </div>
-
-
+      <div class="row">
+          <nav class="navbar navbar-default navbar-fixed-top">
+              <ul class="nav navbar-nav">
+                  <a class="navbar-brand" href="#">
+                      <img alt="Brand" src="/bundles/img/logo.png" class="brand">
+                  </a>
+                  <a href="login" class="logoutAdmin" style="color: white;"> Log Out </a>
+                  <li><a href="menu" style="color: white;">Menu</a></li>
+                  <li><a href="#"style="background-color:lightgrey; color: white;">Utenti</a></li>
+                  <li class="adminID"> <a style="color: white;">{{app.user}}</a></li>
+              </ul>
+          </nav>
+      </div>
+      <div class="row">
+          <table class="table">
+              <tr>
+                  <th>Utente</th>
+                  <th>email</th>
+                  <th>crediti</th>
+              </tr>
+              {% for contacts in table %}
+              <tr>
+                  <td>{{ contacts.getUsername() }}</td>
+                  <td>{{ contacts.getEmail() }}</td>
+                  <td><a href="#" id="credits" class="credits" data-type="text" data-pk="{{ contacts.getId() }}" data-url="/tabUsers" data-title="Enter_credits">
+                    {{ contacts.getCredits() }}
+                      </a></button></td>
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
   </div>
-
   {% endblock %}
   {% block javascripts %}
   {{ parent() }}

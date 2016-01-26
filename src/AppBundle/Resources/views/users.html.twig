@@ -5,53 +5,48 @@
 <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 <body class="usersBody">
 
-<div class="container-fluid">
-      <div class="row">
-
+  <div class="container-fluid">
+    <div class="row">
         <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed visible-xs-*" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-          <a class="navbar-brand" href="#">
-            <img alt="Brand" src="/bundles/img/logo.png" class="brand">
-          </a>
-        </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapseds" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="/bundles/img/logo.png" class="brand">
+                </a>
+            </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
+              <ul class="nav navbar-nav">
+                  <li><a href="#menuView" class="mainMenu" style="color: white;">Menu</a></li>
+                  <li><a href="#bookView" class="mainMenu" style="color: white;" >Prenota</a></li>
+                  <li class="userCredits"><a style="color: white;"> {{app.user.credits}}cr</a></li>
+                  <li class="userID"> <a style="color: white;"> {{app.user}}</a></li>
+                  <li class="logout"><a href="login" style="color: white;"> Log Out </a></li>
+              </ul>
+          </div>
+        </nav>
+    </div>
 
-                <li><a href="#menuView" class="mainMenu" style="color: white;">Menu</a></li>
-                <li><a href="#bookView" class="mainMenu" style="color: white;" >Prenota</a></li>
-                <li class="userCredits"><a style="color: white;"> {{app.user.credits}}cr</a></li>
-                <li class="userID"> <a style="color: white;"> {{app.user}}</a></li>
-                <li><a href="login" class="logout" style="color: white;"> Log Out </a></li>
-
-          </ul>
-      </div>
-    </nav>
-  </div>
-
-      <div class="row">
+    <div class="row">
         <div class="col-xs-12 col-md-6 menu">
-
-
-
-          <h2 id="menuView">
-            Menu del <span id="data"></span></h2>
+            <h2 id="menuView">Menu del <span id="data"></span></h2>
             {% for flash_message in app.session.flashbag.get('notice') %}
                 <div class="flash-notice">
                     {{ flash_message }}
                 </div>
             {% endfor %}
           <div>
-            <ul class="menuList">
-            <p class="errorFlash">  {% if error %}
-              {{ error }}
-              {% endif %}
-              {% if menu %} <p>
+
+              <ul class="menuList">
+                <p class="errorFlash">
+                {% if error %}
+                 {{ error }}
+                {% endif %}</p>
+                  {% if menu %}
                 <li class="menuTitle">Primi:</li>
                 <li>{{ primiOne }}</li>
                 <li>{{ primiTwo }}</li>
@@ -61,57 +56,43 @@
                 <li>{{ secondTwo }}</li>
                 <li>{{ secondThree }}</li>
                 <li class="menuTitle">Contorni:</li>
-
                 <li>{{ sideOne }}</li>
                 <li>{{ sideTwo }}</li>
                 <li>{{ sideThree }}</li>
-              {% endif %}
+                  {% endif %}
               </ul>
-
-
-
           </div>
-
         </div>
         <div class="col-xs-12 col-md-6">
-          <img src="/bundles/img/cafe.jpg" class="col-xs-12 col-md-6 picture" alt="Responsive image">
+            <img src="/bundles/img/cafe.jpg" class="col-xs-12 col-md-6 picture" alt="Responsive image">
         </div>
-      </div>
+    </div>
     <div class="row">
-      <div class="col-xs-12 col-md-6">
-        <img src="/bundles/img/sandw.jpeg" class="col-xs-12 col-md-6 bar" alt="Responsive image">
-      </div>
-      <div class="col-xs-12 col-md-6 reservation">
-        <form class="bookYourLunch" method="post" id="bookView">
-          <h3>Scegli il tuo pranzo in anticipo:</h3>
-
-          {{ form_start(formUsers) }}
-
-          <label>Primo: (5€) </label>
-          {{ form_widget(formUsers.primo) }} <br>
-          <label>Secondo: (7€) </label>
-          {{ form_widget(formUsers.secondo) }}<br>
-          <label>Contorno: (3€) </label>
-          {{ form_widget(formUsers.contorno) }}<br>
-          <label>Acqua: (1€) </label>
-          {{ form_widget(formUsers.acqua) }}<br>
-          <label>Bibita: (2€) </label>
-          {{ form_widget(formUsers.bibita) }} <br>
-          <label>Birra: (2€) </label>
-          {{ form_widget(formUsers.birra) }}<br>
-
-          <label>Caffe: (1€) </label>
-          {{ form_widget(formUsers.caffe) }}<br>
-
-          {{ form_widget(formUsers.save, {'attr': {'class': 'btn btn-default sendButton'}}) }}
-
-
-
-
-          {{ form_end(formUsers) }}
-
-        </form>
-      </div>
+        <div class="col-xs-12 col-md-6">
+            <img src="/bundles/img/sandw.jpeg" class="col-xs-12 col-md-6 bar" alt="Responsive image">
+        </div>
+        <div class="col-xs-12 col-md-6 reservation">
+            <form class="bookYourLunch" method="post" id="bookView">
+                <h3>Scegli il tuo pranzo in anticipo:</h3>
+                      {{ form_start(formUsers) }}
+                      <label>Primo: (5€) </label>
+                      {{ form_widget(formUsers.primo) }} <br>
+                      <label>Secondo: (7€) </label>
+                      {{ form_widget(formUsers.secondo) }}<br>
+                      <label>Contorno: (3€) </label>
+                      {{ form_widget(formUsers.contorno) }}<br>
+                      <label>Acqua: (1€) </label>
+                      {{ form_widget(formUsers.acqua) }}<br>
+                      <label>Bibita: (2€) </label>
+                      {{ form_widget(formUsers.bibita) }} <br>
+                      <label>Birra: (2€) </label>
+                      {{ form_widget(formUsers.birra) }}<br>
+                      <label>Caffe: (1€) </label>
+                      {{ form_widget(formUsers.caffe) }}<br>
+                      {{ form_widget(formUsers.save, {'attr': {'class': 'btn btn-default sendButton'}}) }}
+                      {{ form_end(formUsers) }}
+            </form>
+        </div>
     </div>
   </div>
 </body>
